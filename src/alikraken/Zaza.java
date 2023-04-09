@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.awt.geom.Point2D;
 
-public class Zaza {
-  /** Simple representation for a puck. */
+public class Zaza {  /** Simple representation for a puck. */
   static class Puck {
     // Position of the puck.
     Point2D pos;
