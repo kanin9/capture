@@ -7,6 +7,8 @@ Basic game structure for nFactorial AI CUP 2023, game track
 
 ### Instructions to start your code
 
+Скомпилированный пакет с классом находится в папке `out\production\jdk19`
+
 ```
 java -jar capture.jar -player java alikraken.Zaza -player `код для второго игрока`
 ```
