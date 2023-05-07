@@ -1,17 +1,15 @@
 # nFactorial-AI-Cup-GameTrack
-Basic game structure for nFactorial AI CUP 2023, game track
 
-## Алихан Сигралиев
+Мой бот для испытания от ICPC 2009 года под названием "Capture"
+
+## Алихан Сигралиев (c) 2023
 
 ### Zaza
 
-### Instructions to start your code
+### Инструкции по запуску
 
 Скомпилированный пакет с классом находится в папке `out\production\jdk19`
 
 ```
 java -jar capture.jar -player java alikraken.Zaza -player `код для второго игрока`
 ```
-
-### Typeform to submit:
-https://8ce4yw1bi3g.typeform.com/to/h6kbHmVv
