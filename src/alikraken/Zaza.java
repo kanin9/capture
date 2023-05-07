@@ -379,37 +379,24 @@ public class Zaza {  /** Simple representation for a puck. */
 
       double sX = slist.get(0).pos.getX();
       double sY = slist.get(0).pos.getY();
-      int bgreys = 0;
-      int bmine = 0;
-      int benemy = 0;
-      int ugreys = 0;
-      int umine = 0;
-      int uenemy = 0;
-      int lupmine = 0;
-      int lupgreys = 0;
-      int lupenemy = 0;
-      int lbmine = 0;
-      int lbgreys = 0;
-      int lbenemy = 0;
+      int bgreys = 0; // bottom greys
+      int bmine = 0; // bottom mine
+      int benemy = 0; // bottom enemy
+      int ugreys = 0; // upper greys
+      int umine = 0; // upper mine
+      int uenemy = 0; // upper enemy
+      int lupmine = 0; // left upper mine
+      int lupgreys = 0; // left upper greys
+      int lupenemy = 0; // left upper enemy
+      int lbmine = 0; // left bottom mine
+      int lbgreys = 0; // left bottom greys
+      int lbenemy = 0; // left bottom enemy
 
-      int rotating = 0;
-
-
+      // Greedy implementation
+      // Choose which circle to capture based on potential benefit
       if ( moveCount - lastMove <= 40 && bottomcap >= uppercap && bottomcap >= lupcap && bottomcap >= lbcap && bottomcap > 0) {
-        if(moveCount - lastMove == 1){
-          currCenterX = slist.get(0).pos.getX();
-          currCenterY = slist.get(1).pos.getY();
-        }
-        rotating = 1;
-
         System.out.printf( "%.6f\n", Math.PI * 2.0 / 40 );
       } else if(moveCount - lastMove <= 40 && uppercap >= bottomcap && uppercap >= lupcap && uppercap >= lbcap && uppercap > 0){
-        if(moveCount - lastMove == 1){
-          currCenterX = slist.get(0).pos.getX();
-          currCenterY = slist.get(1).pos.getY();
-        }
-
-        rotating = 1;
         System.out.printf( "%.6f\n", -Math.PI * 2.0 / 40 );
       }
       else if(moveCount - lastMove < 4 && lupcap >= bottomcap && lupcap >= uppercap && lupcap > 0){
@@ -420,6 +407,8 @@ public class Zaza {  /** Simple representation for a puck. */
       }
       else{
         lastMove = moveCount;
+
+        // Count benefit for the circle above, under, under to the left, and above to the left
 
         for(int i = 0; i < plist.size(); i++){
           double pX = plist.get(i).pos.getX();
@@ -456,8 +445,6 @@ public class Zaza {  /** Simple representation for a puck. */
           }
 
         }
-        //System.err.printf("%d %d %d ", umine, ugreys, uenemy);
-        //System.err.printf("%d %d %d\n", bmine, bgreys, benemy);
 
         if(uenemy == 0){
           if(ugreys != 0 && umine != 0) {
@@ -511,104 +498,12 @@ public class Zaza {  /** Simple representation for a puck. */
           else lbcap = -lbgreys;
         }
 
-        //System.err.printf("Bottomcap is %d ", bottomcap);
-        //System.err.printf("; Uppercap is %d ", uppercap);
-        //System.err.printf("; Lupcap is %d ", lupcap);
-        //System.err.printf("; Lbcap is %d \n", lbcap);
-
         System.out.println("0.0");
       }
-
-      /*
-      if(currCenterX != -1 && currCenterY != -1) {
-        for (int i = 0; i < plist.size(); i++) {
-          double pX = plist.get(i).pos.getX();
-          double pY = plist.get(i).pos.getY();
-          double dX = pX - currCenterX;
-          double dY = pY - currCenterY;
-          double a1 = dY - radius;
-          double a2 = dY + radius;
-          double lC = dX + 45;
-
-          int color = plist.get(i).color;
-          if (dX * dX + a1 * a1 < radius * radius) {
-            if (color == Const.GREY) bgreys++;
-            else if (color == Const.BLUE) benemy++;
-            else bmine++;
-          }
-
-          if (dX * dX + a2 * a2 < radius * radius) {
-            if (color == Const.GREY) ugreys++;
-            else if (color == Const.BLUE) uenemy++;
-            else umine++;
-          }
-
-          if (lC * lC + a2 * a2 < radius * radius) {
-            if (color == Const.GREY) lupgreys++;
-            else if (color == Const.BLUE) lupenemy++;
-            else lupmine++;
-          }
-
-          if (lC * lC + a1 * a1 < radius * radius) {
-            if (color == Const.GREY) lbgreys++;
-            else if (color == Const.BLUE) lbenemy++;
-            else lbmine++;
-          }
-
-        }
-        //System.err.printf("%d %d %d ", umine, ugreys, uenemy);
-        //System.err.printf("%d %d %d\n", bmine, bgreys, benemy);
-
-        if (uenemy == 0) {
-          if (ugreys != 0 && umine != 0) {
-            uppercap = ugreys;
-          } else {
-            uppercap = 0;
-          }
-        } else {
-          if (umine != 0) uppercap = uenemy - umine;
-          else uppercap = -ugreys;
-        }
-
-        if (benemy == 0) {
-          if (bgreys != 0 && bmine != 0) {
-            bottomcap = bgreys;
-          } else {
-            bottomcap = 0;
-          }
-        } else {
-          if (bmine != 0) bottomcap = benemy - bmine;
-          else bottomcap = -bgreys;
-        }
-
-        if (lupenemy == 0) {
-          if (lupgreys != 0 && lupmine != 0) {
-            lupcap = lupgreys;
-          } else {
-            lupcap = 0;
-          }
-        } else {
-          if (lupmine != 0) lupcap = lupenemy - lupmine;
-          else lupcap = -lupgreys;
-        }
-
-        if (lbenemy == 0) {
-          if (lbgreys != 0 && lbmine != 0) {
-            lbcap = lbgreys;
-          } else {
-            lbcap = 0;
-          }
-        } else {
-          if (lbmine != 0) lbcap = lbenemy - lbmine;
-          else lbcap = -lbgreys;
-        }
-      }
-      */
-     // System.err.printf("%.2f %.2f\n", currCenterX, currCenterY);
 
       tnum = in.nextInt();
       moveCount++;
 
     }
     }
-  }
+}
