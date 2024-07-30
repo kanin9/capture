@@ -18,4 +18,4 @@
 java -jar capture.jar -player java alikraken.Zaza -player `код для второго игрока`
 ```
 
-Алихан Сигралиев (c) 2023
+Алихан Сиргалиев (c) 2023
